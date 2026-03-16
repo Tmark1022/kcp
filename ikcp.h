@@ -267,19 +267,19 @@ typedef struct IQUEUEHEAD iqueue_head;
 struct IKCPSEG
 {
 	struct IQUEUEHEAD node;
-	IUINT32 conv;
-	IUINT32 cmd;
-	IUINT32 frg;
-	IUINT32 wnd;
-	IUINT32 ts;
-	IUINT32 sn;
-	IUINT32 una;
-	IUINT32 len;
-	IUINT32 resendts;
-	IUINT32 rto;
-	IUINT32 fastack;
-	IUINT32 xmit;
-	char data[1];
+	IUINT32 conv;			// 会话ID
+	IUINT32 cmd;			// command
+	IUINT32 frg;			// 类似ip协议分片MF flag 的作用， 表示后续还有多少个分片
+	IUINT32 wnd;			// 接收窗口大小
+	IUINT32 ts;			// 时间戳
+	IUINT32 sn;			// seg id
+	IUINT32 una;			// ack id
+	IUINT32 len;			// payload len
+	IUINT32 resendts;		// 重传时间戳
+	IUINT32 rto;			// 当前segment的动态rto, rto*1.5 on nodelay mode / rto*2 on normal mode
+	IUINT32 fastack;		// 快速重传（表示当前收到有多个sn后面的ack）
+	IUINT32 xmit;			// 当前segment重传次数（超时重传和快速重传）
+	char data[1];			// payload 负载指针
 };
 
 
