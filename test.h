@@ -73,7 +73,7 @@ static inline void isleep(unsigned long millisecond)
 	ts.tv_sec = (time_t)(millisecond / 1000);
 	ts.tv_nsec = (long)((millisecond % 1000) * 1000000);
 	/*nanosleep(&ts, NULL);*/
-	usleep((millisecond << 10) - (millisecond << 4) - (millisecond << 3));
+	usleep((millisecond << 10) - (millisecond << 4) - (millisecond << 3));		// 相当于 x*1024 - x*16 - x*8 ==> x*1000; usleep这里不太合适， 因为参数不能大于1000000, 这就要求millisecond 参数少于等于1000。
 	#elif defined(_WIN32)
 	Sleep(millisecond);
 	#endif
@@ -122,6 +122,7 @@ public:
 		seeds.resize(size);
 	}
 
+	// 不重复地随机[0, size)的数
 	int random() {
 		int x, i;
 		if (seeds.size() == 0) return 0;
